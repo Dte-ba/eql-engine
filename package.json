@@ -1,6 +1,6 @@
 {
   "name": "eql-engine",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "E-Learnig query language interpreter",
   "main": "eql.js",
   "scripts": {

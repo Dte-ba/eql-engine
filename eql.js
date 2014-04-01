@@ -10,7 +10,7 @@
   var root = this;
 
   var eql = {
-    version = "0.0.1"
+    version: "0.0.2"
   }
 
   // Export the EQL object for Node.js
@@ -19,7 +19,7 @@
       exports = module.exports = eql;
     }
     exports.eql = eql;
-    eql.version = require("../package.json").version
+    eql.version = require("./package.json").version
   } else {
     root.eql = eql;
   }
