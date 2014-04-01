@@ -9,7 +9,9 @@
   
   var root = this;
 
-  var eql = {}
+  var eql = {
+    version = "0.0.1"
+  }
 
   // Export the EQL object for Node.js
   if (typeof exports !== 'undefined') {
@@ -17,9 +19,17 @@
       exports = module.exports = eql;
     }
     exports.eql = eql;
+    eql.version = require("../package.json").version
   } else {
     root.eql = eql;
   }
+
+  // parse query
+  eql.parse = function(query) {
+    var res = {};
+
+    return res;
+  };
 
   // AMD registration
   if (typeof define === 'function' && define.amd) {
