@@ -2,6 +2,35 @@
 
 E-Learnig query language interpreter
 
+## Usage
+
+For node.js
+
+```js
+// npm install eql-engine
+var eql = require('eql-engine');
+```
+
+```js
+
+var query = eql.parse("select all:some text");
+// do something with query
+
+```
+
+## Parsed queries
+
+**SELECT** 
+
+basic `select all:some text`
+
+```js
+{
+  command: 'select',
+  filters: [ { key: 'all', value: 'some text' } ]
+}
+```
+
 ## Licencia
 
 Copyright(c) 2014 Dirección de Tecnología Educativa de Buenos Aires (Dte-ba)
