@@ -22,13 +22,104 @@ var query = eql.parse("select all:some text");
 
 **SELECT** 
 
-basic `select all:some text`
+basic
 
 ```js
+// select all:Lorem ipsum
 {
-  command: 'select',
-  filters: [ { key: 'all', value: 'some text' } ]
+  "command": "select",
+  "where": {
+    "predicate": {
+      "key": "all",
+      "operator": "=",
+      "value": "Lorem ipsum"
+    }
+  }
 }
+
+```
+
+advanced
+
+```js
+// select all:Lorem ipsum other:dolor sit amet
+{
+  "command": "select",
+  "where": {
+    "predicate": {
+      "key": "all",
+      "operator": "=",
+      "value": "Lorem ipsum other"
+    }
+  }
+}
+
+```
+
+```js
+// select all:Lorem ipsum && other!:dolor sit amet
+{
+  "command": "select",
+  "where": {
+    "predicate": {
+      "key": "all",
+      "operator": "=",
+      "value": "Lorem ipsum"
+    },
+    "and": {
+      "predicate": {
+        "key": "other",
+        "operator": "!=",
+        "value": "dolor sit amet"
+      }
+    }
+  }
+}
+
+```
+
+```js
+// select all:Lorem ipsum || other:dolor sit amet
+{
+  "command": "select",
+  "where": {
+    "predicate": {
+      "key": "all",
+      "operator": "=",
+      "value": "Lorem ipsum"
+    },
+    "or": {
+      "predicate": {
+        "key": "other",
+        "operator": "=",
+        "value": "dolor sit amet"
+      }
+    }
+  }
+}
+
+```
+
+```js
+// select all%Lorem ipsum || other:dolor sit amet
+{
+  "command": "select",
+  "where": {
+    "predicate": {
+      "key": "all",
+      "operator": "contains",
+      "value": "Lorem ipsum"
+    },
+    "or": {
+      "predicate": {
+        "key": "other",
+        "operator": "=",
+        "value": "dolor sit amet"
+      }
+    }
+  }
+}
+
 ```
 
 ## Licencia

@@ -10,7 +10,7 @@
   var root = this;
 
   var eql = {
-    version: "0.0.4"
+    version: "0.0.5"
   };
 
   // Export the EQL object for Node.js
@@ -46,7 +46,7 @@
     // parse the args
     var q = query.substring(res.command.length);
     
-    res.filters = __filters(q);
+    res.where = _where(q);
     
     return res;
   };
@@ -62,35 +62,51 @@
 
   //
   // private functions
-  function __filters(query) {
-    var res = [];
-    var keypatt = /[a-zA-Z]+\:/ig;
-    var keymatches = __getMatches(keypatt, query);
+  function _where(query) {
+    //var res = [];
+    var blockpatt = /(\&\&|\|\|)/ig;
+    var blocks = query.split(blockpatt);
+  
+    var where = {};
+    var b;
+    var pred = where;
 
-    for (var i = 0; i < keymatches.length; i++) {
-      var m = keymatches[i];
-      var key = m[0].substring(0, m[0].length-1);
-
-      var obj = { key: key};
-
-      var rest = query.substring(m.index);
-
-      // has next match
-      var value;
-      if ((i+1) < keymatches.length) {
-        var nm = keymatches[i+1];
-        value = nm.input.substring(0, nm.index);
-      } else {
-        value = rest;
-      }
-
-      // set cleaned value
-      obj.value = value.replace(/(\s*[a-zA-Z]+\:|\s+$)/g, '');
+    while(b = blocks.shift()){
       
-      res.push(obj);
+      if (b === '||' || b === '&&') {
+        if (b === '&&'){
+          pred = pred.and = {}
+        } else {
+          pred = pred.or = {}
+        }
+      } else {
+        pred.predicate = _predicate(b);
+      }
+    }
+
+    //console.log(where);
+    return where;
+  }
+
+  function _predicate(query) {
+    var res = {};
+    // var keypatt = /([a-zA-Z0-9]+)(!\:|\:|%)/ig;
+    var patt = /([a-zA-Z0-9]+)(!\:|\:|%)([\sa-zA-Z0-9]+)/ig;
+
+    var matches = __getMatches(patt, query);
+
+    var m = matches[0];
+
+    var key = m[1];
+    var operator = m[2];
+    var value = m[3];
+
+    return { 
+      key: key,
+      operator: _operatorType(operator),
+      value: value.trim()
     };
 
-    return res;
   }
 
   function __getMatches(patt, str) {
@@ -101,6 +117,15 @@
     }
 
     return res;
+  }
+
+  function _operatorType(operator){
+    switch( operator ){
+      case '!:': return '!='
+      case '%': return 'contains'
+      case ':':
+      default: return '='
+    }
   }
 
 }).call(this);

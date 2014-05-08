@@ -26,3 +26,5 @@ node_modules
 
 # test
 test.js
+
+*.tmp
