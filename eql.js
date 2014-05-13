@@ -90,8 +90,8 @@
 
   function _predicate(query) {
     var res = {};
-    // var keypatt = /([a-zA-Z0-9]+)(!\:|\:|%)/ig;
-    var patt = /([a-zA-Z0-9]+)(!\:|\:|%)([\sa-zA-Z0-9]+)/ig;
+
+    var patt = /([\w]+)(!\:|\:|%)([\-,\.\s\w]+)/ig;
 
     var matches = __getMatches(patt, query);
 
