@@ -91,7 +91,7 @@
   function _predicate(query) {
     var res = {};
 
-    var patt = /([\w]+)(!\:|\:|%)([\-,\.\s\w]+)/ig;
+    var patt = /([\wáàãâäéèêëíìîïóòõôöúùûüñ]+)(!\:|\:|%)([\-,\.\s\wáàãâäéèêëíìîïóòõôöúùûüñ]+)/ig;
 
     var matches = __getMatches(patt, query);
 
